@@ -929,6 +929,31 @@ describe("the trailing cluster (SNV-FR-59)", () => {
     );
   });
 
+  it("SNV-FR-MQHI: each theme choice carries the glyph that names it, and none carries the Settings gear", async () => {
+    // SNV-FR-MQHI: a sun, a moon, and a monitor. The gear is the mark of the
+    // Settings button (STB-FR-04), so the selected system choice must not
+    // read as a Settings control that does nothing.
+    render(<Harness activeWorktree={ON_MAIN} />);
+
+    const theme = await screen.findByTestId("chrome-theme-select");
+    // The case the requirement exists for: system is the selected choice.
+    await waitFor(() =>
+      expect(within(theme).getByRole("radio", { name: "System" })).toHaveAttribute(
+        "aria-checked",
+        "true",
+      ),
+    );
+    const glyphOf = (name: string) =>
+      within(theme)
+        .getByRole("radio", { name })
+        .querySelector("svg")
+        ?.getAttribute("data-icon");
+    expect(glyphOf("Light")).toBe("sun");
+    expect(glyphOf("Dark")).toBe("moon");
+    expect(glyphOf("System")).toBe("monitor");
+    expect(theme.querySelector('[data-icon="gear"]')).toBeNull();
+  });
+
   it("is present whether or not the project has enrolled anyone", async () => {
     // SNV-FR-59 / AGT-FR-02: a project enrolling none carries the control with
     // a count of none rather than no control at all.

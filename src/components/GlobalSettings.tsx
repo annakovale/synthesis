@@ -510,7 +510,7 @@ export function GlobalSettings({
               >
                 {value === "light" && <Icon.Sun size={13} />}
                 {value === "dark" && <Icon.Moon size={13} />}
-                {value === "system" && <Icon.Settings size={13} />}
+                {value === "system" && <Icon.Monitor size={13} />}
                 {label}
               </button>
             ))}

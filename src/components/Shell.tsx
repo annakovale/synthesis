@@ -382,7 +382,8 @@ export function TopChrome({
         />
         {/* SNV-FR-15 / SNV-FR-16: a light/dark/system selector that mirrors the
             Global settings Appearance section and edits the same shared
-            user-global preference. */}
+            user-global preference. SNV-FR-MQHI: each choice carries the glyph
+            that names it, and none carries the Settings gear (STB-FR-04). */}
         <div
           role="radiogroup"
           aria-label="Theme"
@@ -407,7 +408,7 @@ export function TopChrome({
             >
               {value === "light" && <Icon.Sun size={13} />}
               {value === "dark" && <Icon.Moon size={13} />}
-              {value === "system" && <Icon.Settings size={13} />}
+              {value === "system" && <Icon.Monitor size={13} />}
             </button>
           ))}
         </div>

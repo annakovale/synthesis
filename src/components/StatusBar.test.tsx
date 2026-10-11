@@ -63,6 +63,14 @@ describe("leading region (STB-FR-04)", () => {
     expect(props.onSettings).toHaveBeenCalledTimes(1);
     expect(props.onSettings).toHaveBeenCalledWith(buttons[0]);
   });
+
+  it("STB-FR-04: renders the Settings button as the gear glyph alone", () => {
+    renderBar();
+    const button = screen.getByRole("button", { name: "Settings" });
+    expect(button.children).toHaveLength(1);
+    expect(button.firstElementChild).toHaveAttribute("data-icon", "gear");
+    expect(button.textContent).toBe("");
+  });
 });
 
 describe("centre region — progress (STB-FR-05–STB-FR-09)", () => {

@@ -171,6 +171,29 @@ describe("Appearance section (GLS-FR-04, GLS-FR-05)", () => {
     await waitFor(() => expect(onThemeChange).toHaveBeenCalledWith("light"));
   });
 
+  it("GLS-FR-ZBBD, SNV-FR-MQHI: each theme choice carries the glyph of its twin in the top chrome, and none carries the Settings gear", async () => {
+    // GLS-FR-ZBBD: the same sun, moon, and monitor as the top-chrome selector
+    // (SNV-FR-MQHI). The gear is the Settings button's own mark (STB-FR-04).
+    wireBackend({ prefs: { theme: "system" } });
+
+    render(<GlobalSettings onThemeChange={vi.fn()} />);
+
+    const system = await screen.findByRole("radio", { name: "System" });
+    // Assert once the loaded preference has selected system: the case the
+    // requirement exists for.
+    await waitFor(() => expect(system).toHaveAttribute("aria-checked", "true"));
+    const group = system.closest('[role="radiogroup"]') as HTMLElement;
+    const glyphOf = (name: string) =>
+      within(group)
+        .getByRole("radio", { name })
+        .querySelector("svg")
+        ?.getAttribute("data-icon");
+    expect(glyphOf("Light")).toBe("sun");
+    expect(glyphOf("Dark")).toBe("moon");
+    expect(glyphOf("System")).toBe("monitor");
+    expect(group.querySelector('[data-icon="gear"]')).toBeNull();
+  });
+
   it("on selecting dark, invokes save_app_preferences and applies dark immediately", async () => {
     const onThemeChange = vi.fn();
     wireBackend({ prefs: { theme: "light" } });

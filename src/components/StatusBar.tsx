@@ -87,7 +87,8 @@ export function StatusBar({
   return (
     <div className="status-bar" data-testid="status-bar">
       <div className="status-bar__leading">
-        {/* STB-FR-04: a graphical icon control. It opens the Settings child
+        {/* STB-FR-04: the gear glyph alone, with no text. No theme choice
+            carries this glyph (SNV-FR-MQHI). It opens the Settings child
             window, or focuses it when it is already open (SWN-FR-05,
             SWN-FR-06) — which is the backend's single decision, so this only
             asks. It creates no tab, and the activity bar carries no settings
